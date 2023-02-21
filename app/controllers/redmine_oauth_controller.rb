@@ -21,7 +21,7 @@ class RedmineOauthController < AccountController
       token = oauth_client.auth_code.get_token(params[:code], :redirect_uri => oauth_google_callback_url)
       result = token.get(settings[:userinfourl])
       info = JSON.parse(result.body)
-      if info && info["verified_email"]
+      if info && info["email_verified"]
         if allowed_domain_for?(info["email"])
           try_to_login info
         else
