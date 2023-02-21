@@ -3,6 +3,22 @@
   <%= text_field_tag 'settings[issuer]', @settings[:issuer] %>
 </p>
 <p>
+  <label>authURL:</label>
+  <%= text_field_tag 'settings[authurl]', @settings[:authurl] %>
+</p>
+<p>
+  <label>tokenURL:</label>
+  <%= text_field_tag 'settings[tokenurl]', @settings[:tokenurl] %>
+</p>
+<p>
+  <label>userinfoURL:</label>
+  <%= text_field_tag 'settings[userinfourl]', @settings[:userinfourl] %>
+</p>
+<p>
+  <label>scope:</label>
+  <%= text_field_tag 'settings[scopes]', @settings[:scopes] %>
+</p>
+<p>
   <label>Client ID:</label>
   <%= text_field_tag 'settings[client_id]', @settings[:client_id] %>
 </p>
