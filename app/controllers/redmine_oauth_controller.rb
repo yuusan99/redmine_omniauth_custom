@@ -30,6 +30,7 @@ class RedmineOauthController < AccountController
         end
       else
         flash[:error] = l(:notice_unable_to_obtain_google_credentials)
+        flash[:error] = l(info)
         redirect_to signin_path
       end
     end
