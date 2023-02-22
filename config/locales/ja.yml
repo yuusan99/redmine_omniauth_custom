@@ -1,0 +1,5 @@
+ja:
+  notice_unable_to_obtain_gitlab_credentials: "Gitlabから認証情報を取得できません。"
+  notice_domain_not_allowed: "この(%{domain})ドメインは拒否されています。"
+  notice_access_denied: "このサイトにアクセスするには、Gitlabの資格情報が必要です。"
+  login_via_gitlab: "Gitlabでログイン"

@@ -4,22 +4,22 @@ require 'json'
 class RedmineOauthController < AccountController
   include Helpers::MailHelper
   include Helpers::Checker
-  def oauth_custom
-    if Setting.plugin_redmine_omniauth_custom[:oauth_authentification]
+  def oauth_gitlab
+    if Setting.plugin_redmine_omniauth_gitlab[:oauth_authentification]
       session[:back_url] = params[:back_url]
-      redirect_to oauth_client.auth_code.authorize_url(:redirect_uri => oauth_custom_callback_url, :scope => scopes)
+      redirect_to oauth_client.auth_code.authorize_url(:redirect_uri => oauth_gitlab_callback_url, :scope => scopes)
     else
       password_authentication
     end
   end
 
-  def oauth_custom_callback
+  def oauth_gitlab_callback
     if params[:error]
       flash[:error] = l(:notice_access_denied)
       redirect_to signin_path
     else
-      token = oauth_client.auth_code.get_token(params[:code], :redirect_uri => oauth_custom_callback_url)
-      result = token.get(settings[:userinfourl])
+      token = oauth_client.auth_code.get_token(params[:code], :redirect_uri => oauth_gitlab_callback_url)
+      result = token.get(settings[:issuer] + '/oauth/userinfo')
       info = JSON.parse(result.body)
       if info && info["email_verified"]
         if allowed_domain_for?(info["email"])
@@ -29,7 +29,7 @@ class RedmineOauthController < AccountController
           redirect_to signin_path
         end
       else
-        flash[:error] = l(:notice_unable_to_obtain_custom_credentials)
+        flash[:error] = l(:notice_unable_to_obtain_gitlab_credentials)
         flash[:error] = l(info)
         redirect_to signin_path
       end
@@ -86,12 +86,12 @@ class RedmineOauthController < AccountController
   def oauth_client
     @client ||= OAuth2::Client.new(settings[:client_id], settings[:client_secret],
       :site => settings[:issuer],
-      :authorize_url => settings[:authurl],
-      :token_url => settings[:tokenurl])
+      :authorize_url => settings[:issuer] + '/oauth/authorize',
+      :token_url => settings[:issuer] + '/oauth/token')
   end
 
   def settings
-    @settings ||= Setting.plugin_redmine_omniauth_custom
+    @settings ||= Setting.plugin_redmine_omniauth_gitlab
   end
 
   def scopes
