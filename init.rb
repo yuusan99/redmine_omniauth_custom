@@ -1,18 +1,18 @@
 require 'redmine'
-require_dependency 'redmine_omniauth_google/hooks'
+require_dependency 'redmine_omniauth_custom/hooks'
 
-Redmine::Plugin.register :redmine_omniauth_google do
-  name 'Redmine Omniauth Google plugin'
-  author 'Dmitry Kovalenok'
-  description 'This is a plugin for Redmine registration through google'
+Redmine::Plugin.register :redmine_omniauth_custom do
+  name 'Redmine Omniauth Custom plugin'
+  author 'Yuu Saito'
+  description 'This is a plugin for Redmine registration through Custom OIDC Provider'
   version '0.0.1'
-  url 'https://github.com/twinslash/redmine_omniauth_google'
-  author_url 'http://twinslash.com'
+  url 'https://github.com/yuusan99/redmine_omniauth_custom'
+  author_url 'https://github.com/yuusan99'
 
   settings :default => {
     :client_id => "",
     :client_secret => "",
     :oauth_autentification => false,
     :allowed_domains => ""
-  }, :partial => 'settings/google_settings'
+  }, :partial => 'settings/custom_settings'
 end
